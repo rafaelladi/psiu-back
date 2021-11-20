@@ -5,4 +5,8 @@ import org.springframework.data.rest.core.config.Projection;
 
 @Projection(name = "OrganizationProjection", types = Organization.class)
 public interface OrganizationProjection {
+    Long getId();
+    String getName();
+    String getEmail();
+    boolean isActive();
 }

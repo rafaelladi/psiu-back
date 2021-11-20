@@ -25,8 +25,7 @@ public class Chat {
     @JoinColumn(name = "volunteer_id")
     private Volunteer volunteer;
 
-    @OneToMany
-    @JoinColumn(name = "chat_id")
+    @OneToMany(mappedBy = "chat")
     @OrderBy("sentAt")
     private List<Message> messages;
 }

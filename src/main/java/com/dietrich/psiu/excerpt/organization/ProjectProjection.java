@@ -5,4 +5,7 @@ import org.springframework.data.rest.core.config.Projection;
 
 @Projection(name = "projectProjection", types = Project.class)
 public interface ProjectProjection {
+    Long getId();
+    String getName();
+    boolean isActive();
 }

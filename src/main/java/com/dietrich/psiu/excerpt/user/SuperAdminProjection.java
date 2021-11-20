@@ -5,4 +5,6 @@ import org.springframework.data.rest.core.config.Projection;
 
 @Projection(name = "superAdminProjection", types = SuperAdmin.class)
 public interface SuperAdminProjection {
+    Long getId();
+    String getUsername();
 }

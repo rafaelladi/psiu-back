@@ -32,5 +32,5 @@ public class Organization {
     @OneToMany(mappedBy = "organization")
     private Set<Project> projects = new HashSet<>();
 
-    private boolean isActive = false;
+    private boolean active = false;
 }

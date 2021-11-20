@@ -42,25 +42,25 @@ public class SecurityService {
         return a;
     }
 
-    public static boolean filterUser(Optional<Atendimento> optionalAtendimento) {
-        if(optionalAtendimento.isEmpty())
-            return true;
-        Person user = getUser();
-        if(user == null)
-            return false;
-        Atendimento atendimento = optionalAtendimento.get();
-        return atendimento.getUser().getId().equals(user.getId());
-    }
+//    public static boolean filterUser(Optional<Atendimento> optionalAtendimento) {
+//        if(optionalAtendimento.isEmpty())
+//            return true;
+//        Person user = getUser();
+//        if(user == null)
+//            return false;
+//        Atendimento atendimento = optionalAtendimento.get();
+//        return atendimento.getUser().getId().equals(user.getId());
+//    }
 
-    public static boolean filterVolunteer(Optional<Atendimento> optionalAtendimento) {
-        if(optionalAtendimento.isEmpty())
-            return true;
-        Person user = getUser();
-        if(user == null)
-            return false;
-        Atendimento atendimento = optionalAtendimento.get();
-        return atendimento.getUser().getId().equals(user.getId());
-    }
+//    public static boolean filterVolunteer(Optional<Atendimento> optionalAtendimento) {
+//        if(optionalAtendimento.isEmpty())
+//            return true;
+//        Person user = getUser();
+//        if(user == null)
+//            return false;
+//        Atendimento atendimento = optionalAtendimento.get();
+//        return atendimento.getUser().getId().equals(user.getId());
+//    }
 
     private static Person getUser() {
         if(SecurityContextHolder.getContext().getAuthentication() instanceof UsernamePasswordAuthenticationToken auth &&

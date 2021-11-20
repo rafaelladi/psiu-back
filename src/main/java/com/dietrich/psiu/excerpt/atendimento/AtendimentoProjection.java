@@ -7,6 +7,7 @@ import com.dietrich.psiu.excerpt.user.VolunteerProjection;
 import com.dietrich.psiu.model.atendimento.Atendimento;
 import com.dietrich.psiu.model.atendimento.StatusAtendimento;
 import org.springframework.data.rest.core.config.Projection;
+import org.springframework.hateoas.server.core.Relation;
 
 import java.util.Date;
 
