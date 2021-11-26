@@ -1,6 +1,7 @@
 package com.dietrich.psiu.handler;
 
 import com.dietrich.psiu.model.user.Person;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -26,6 +27,7 @@ public class MyUserDetails implements UserDetails {
                 collect(Collectors.toList());
     }
 
+    @JsonIgnore
     @Override
     public String getPassword() {
         return person.getPassword();

@@ -32,4 +32,8 @@ public class Project {
     private Organization organization;
 
     private boolean active = true;
+
+    public boolean isActive() {
+        return active && !volunteers.isEmpty();
+    }
 }

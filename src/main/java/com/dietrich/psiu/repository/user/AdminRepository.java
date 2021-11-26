@@ -1,30 +1,15 @@
 package com.dietrich.psiu.repository.user;
 
-import com.dietrich.psiu.excerpt.user.AdminProjection;
-import com.dietrich.psiu.model.schedule.Period;
 import com.dietrich.psiu.model.user.Admin;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
-import org.springframework.data.rest.core.annotation.RestResource;
+import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import java.util.List;
 
-@RepositoryRestResource(collectionResourceRel = "admins", path = "admins", excerptProjection = AdminProjection.class)
+@Repository
 public interface AdminRepository extends PagingAndSortingRepository<Admin, Long> {
-    @Override
-    @RestResource
-    @Query("select a from Admin a where (?#{hasAuthority('VOLUNTEER')} = true and a.organization.id = ?#{authentication.principal.person.organization.id}) or " +
-            "(?#{hasAuthority('ADMIN')} = true and a.organization.id = ?#{authentication.principal.person.organization.id}) or " +
-            "?#{hasAuthority('SUPER_ADMIN')} = true")
-    Page<Admin> findAll(Pageable pageable);
-
-    @Override
-    @RestResource
-    @Query("select a from Admin a where a.id = :id and ((?#{hasAuthority('VOLUNTEER')} = true and a.organization.id = ?#{authentication.principal.person.organization.id}) or " +
-            "(?#{hasAuthority('ADMIN')} = true and a.organization.id = ?#{authentication.principal.person.organization.id}) or " +
-            "?#{hasAuthority('SUPER_ADMIN')} = true)")
-    Optional<Admin> findById(Long id);
+    boolean existsByEmail(String email);
+    Admin findByEmail(String email);
+    List<Admin> findAllByOrganizationId(Long organizationId);
+    Admin findByIdAndOrganizationId(Long id, Long organizationId);
 }

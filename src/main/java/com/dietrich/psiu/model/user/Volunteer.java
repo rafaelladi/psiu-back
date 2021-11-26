@@ -4,8 +4,10 @@ import com.dietrich.psiu.model.atendimento.Atendimento;
 import com.dietrich.psiu.model.organization.Organization;
 import com.dietrich.psiu.model.organization.Project;
 import com.dietrich.psiu.model.schedule.Schedule;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -18,6 +20,7 @@ public class Volunteer extends Person {
     @ManyToMany(mappedBy = "volunteers")
     private Set<Project> projects = new HashSet<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "volunteer")
     private Set<Atendimento> atendimentos = new HashSet<>();
 

@@ -1,5 +1,6 @@
 package com.dietrich.psiu.util;
 
+import com.dietrich.psiu.handler.MyUserDetails;
 import com.dietrich.psiu.model.user.Person;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -20,19 +21,20 @@ public class JwtUtils {
 
     private static final Integer EXPIRATION_TIME = 999999999;
 
-    public static String getJwtToken(Person person) {
+    public static String getJwtToken(Person user) {
         List<GrantedAuthority> authorities = new ArrayList<>();
-        person.getRoles().forEach(role -> authorities.add(new SimpleGrantedAuthority(role.getName())));
-        return createToken(person.getEmail(), authorities);
+        user.getRoles().forEach(role -> authorities.add(new SimpleGrantedAuthority(role.getName())));
+        return createToken(user, authorities);
     }
 
-    private static String createToken(String subject, List<GrantedAuthority> authorities) {
+    private static String createToken(Person user, List<GrantedAuthority> authorities) {
         String token = Jwts.builder()
                 .setId(ID)
-                .setSubject(subject)
+                .setSubject(user.getEmail())
                 .claim("authorities", authorities.stream()
                         .map(GrantedAuthority::getAuthority)
                         .collect(Collectors.toList()))
+                .claim("user", user)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
 //                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS512,

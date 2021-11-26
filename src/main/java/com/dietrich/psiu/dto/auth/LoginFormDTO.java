@@ -1,4 +1,4 @@
-package com.dietrich.psiu.dto;
+package com.dietrich.psiu.dto.auth;
 
 import lombok.Getter;
 import lombok.Setter;

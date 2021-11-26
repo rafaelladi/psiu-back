@@ -2,6 +2,7 @@ package com.dietrich.psiu.model.organization;
 
 import com.dietrich.psiu.model.user.Admin;
 import com.dietrich.psiu.model.user.Volunteer;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,12 +24,15 @@ public class Organization {
     @Column
     private String email;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "organization")
     private Set<Admin> admins = new HashSet<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "organization")
     private Set<Volunteer> volunteers = new HashSet<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "organization")
     private Set<Project> projects = new HashSet<>();
 

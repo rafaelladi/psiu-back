@@ -1,30 +1,23 @@
 package com.dietrich.psiu.repository.user;
 
-import com.dietrich.psiu.excerpt.user.VolunteerProjection;
-import com.dietrich.psiu.model.user.Admin;
+import com.dietrich.psiu.model.organization.Organization;
 import com.dietrich.psiu.model.user.Volunteer;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
-import org.springframework.data.rest.core.annotation.RestResource;
+import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import java.util.List;
 
-@RepositoryRestResource(collectionResourceRel = "volunteers", path = "volunteers", excerptProjection = VolunteerProjection.class)
+@Repository
 public interface VolunteerRepository extends PagingAndSortingRepository<Volunteer, Long> {
-    @Override
-    @RestResource
-    @Query("select v from Volunteer v where (?#{hasAuthority('VOLUNTEER')} = true and v.organization.id = ?#{authentication.principal.person.organization.id}) or " +
-            "(?#{hasAuthority('ADMIN')} = true and v.organization.id = ?#{authentication.principal.person.organization.id}) or " +
-            "?#{hasAuthority('SUPER_ADMIN')} = true")
-    Page<Volunteer> findAll(Pageable pageable);
+    boolean existsByEmail(String email);
+    Volunteer findByEmail(String email);
+    List<Volunteer> findAllByOrganizationId(Long organizationId);
+    Volunteer findByIdAndOrganizationId(Long id, Long organizationId);
 
-    @Override
-    @RestResource
-    @Query("select v from Volunteer v where v.id = :id and ((?#{hasAuthority('VOLUNTEER')} = true and :id = ?#{authentication.principal.person.id}) or " +
-            "(?#{hasAuthority('ADMIN')} = true and v.organization.id = ?#{authentication.principal.person.organization.id}) or " +
-            "?#{hasAuthority('SUPER_ADMIN')} = true)")
-    Optional<Volunteer> findById(Long id);
+    @Query(value = "select * from person v, project_volunteers pv where pv.volunteer_id = v.id and pv.project_id = :projectId and v.organization_id = :organizationId and v.dtype = 'Volunteer'", nativeQuery = true)
+    List<Volunteer> findAllByProjectIdAndOrganizationId(Long projectId, Long organizationId);
+
+    @Query(value = "select count(v.name) > 0 from person v, project_volunteers pv where v.id = :id and pv.project_id = :projectId and v.organization_id = :organizationId and v.dtype = 'Volunteer'", nativeQuery = true)
+    boolean existsByIdAndProjectIdAndOrganizationId(Long id, Long projectId, Long organizationId);
 }

@@ -4,10 +4,8 @@ import com.dietrich.psiu.model.chat.Chat;
 import com.dietrich.psiu.model.organization.Project;
 import com.dietrich.psiu.model.user.User;
 import com.dietrich.psiu.model.user.Volunteer;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.rest.core.annotation.RestResource;
 
 import javax.persistence.*;
 import java.util.Date;
